@@ -1,0 +1,36 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: rgb(127, 91, 255);
+}
+
+.top {
+    margin: 3%;
+    text-align: center;
+    color: rgb(255, 145, 0);
+    text-decoration: 2px underline;
+    text-shadow: 2px 2px #363636;
+    font-weight: bold;
+}
+
+.container{
+    border: 3px solid rgb(255, 0, 0);
+    border-radius: 10px;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+}
+
+.option{
+    border: 2px solid rgb(126, 126, 126);
+    text-align: center;
+    border-radius: 10px;
+    background-color: rgb(147, 255, 255);
+}
+
+.option:hover{
+    background-color: rgb(0, 204, 255);
+}
