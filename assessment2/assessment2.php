@@ -7,11 +7,12 @@ $database = "assessment2";
 
 $conn = new mysqli($servername, $username, $password);
 
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if the db exists
+// check if the db exists
 if (!$conn->select_db($database)) {
 
     // create the database
@@ -19,10 +20,10 @@ if (!$conn->select_db($database)) {
 
     if ($conn->query($sql) === TRUE) {
 
-        // Retry Connection
+        // retry connection
         $conn = new mysqli($servername, $username, $password, $database);
 
-        // Creating table "Information"
+        // creating table "information"
         $sql = "CREATE TABLE information(
             id INT(6) PRIMARY KEY AUTO_INCREMENT,
             first_name VARCHAR(20) NOT NULL,
@@ -41,7 +42,7 @@ if (!$conn->select_db($database)) {
     }
 }
 
-// Close the initial connection
+// close connection
 $conn->close();
 
 // new connection to db
