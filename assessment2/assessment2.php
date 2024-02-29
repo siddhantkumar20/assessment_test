@@ -1,55 +1,59 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 
 $servername = "localhost";
 $username = "root";
 $password = null;
-$database = "assessment2";
+$database = "assessment6";
 
+//Connection established
 $conn = new mysqli($servername, $username, $password);
 
+// Create Database if not exists
+$sql = "CREATE DATABASE IF NOT EXISTS $database";
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if($conn->query($sql) == TRUE)
+{
+    echo "Database Connection<br>";
+}
+else
+{
+    echo "Error occured" .$conn->error;
 }
 
-// check if the db exists
-if (!$conn->select_db($database)) {
 
-    // create the database
-    $sql = "CREATE DATABASE $database";
-
-    if ($conn->query($sql) === TRUE) {
-
-        // retry connection
-        $conn = new mysqli($servername, $username, $password, $database);
-
-        // creating table "information"
-        $sql = "CREATE TABLE information(
-            id INT(6) PRIMARY KEY AUTO_INCREMENT,
-            first_name VARCHAR(20) NOT NULL,
-            last_name VARCHAR(20) NOT NULL,
-            dob DATE NOT NULL,
-            email VARCHAR(40)
-        )";
-
-        if ($conn->query($sql) === TRUE) {
-            echo "Table created successfully <br>";
-        } else {
-            echo "Error occurred: " . $conn->error;
-        }
-    } else {
-        echo "Error occurred: " . $conn->error;
-    }
-}
-
-// close connection
+// Close connection
 $conn->close();
 
-// new connection to db
+// Retry connection
 $conn = new mysqli($servername, $username, $password, $database);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+
+if ($conn->connect_error)
+{
+    die("Connection Error".$conn->connect_error);
+}else{
+    echo "Connected successfully<br>";
+}
+
+// Create Table if not exists
+$sql = "CREATE TABLE IF NOT EXISTS information(
+    id INT(6) PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(20) NOT NULL,
+    last_name VARCHAR(20) NOT NULL,
+    dob DATE NOT NULL,
+    email VARCHAR(40)
+    )";
+
+if($conn->query($sql) == TRUE)
+{
+    echo "Table Connected<br>";
+}
+else
+{
+    echo "Error occured" .$conn->error;
 }
 
 
@@ -69,9 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     // Close the statement and connection
     $stmt->close();
 }
-
 ?>
-
 
 
 <!DOCTYPE html>
@@ -171,6 +173,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 $conn->close();
 
 ?>
+
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
