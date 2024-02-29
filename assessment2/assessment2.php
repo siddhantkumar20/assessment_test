@@ -5,46 +5,51 @@ $username = "root";
 $password = null;
 $database = "assessment2";
 
+$conn = new mysqli($servername, $username, $password);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Check if the db exists
+if (!$conn->select_db($database)) {
+
+    // create the database
+    $sql = "CREATE DATABASE $database";
+
+    if ($conn->query($sql) === TRUE) {
+
+        // Retry Connection
+        $conn = new mysqli($servername, $username, $password, $database);
+
+        // Creating table "Information"
+        $sql = "CREATE TABLE information(
+            id INT(6) PRIMARY KEY AUTO_INCREMENT,
+            first_name VARCHAR(20) NOT NULL,
+            last_name VARCHAR(20) NOT NULL,
+            dob DATE NOT NULL,
+            email VARCHAR(40)
+        )";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Table created successfully <br>";
+        } else {
+            echo "Error occurred: " . $conn->error;
+        }
+    } else {
+        echo "Error occurred: " . $conn->error;
+    }
+}
+
+// Close the initial connection
+$conn->close();
+
+// new connection to db
 $conn = new mysqli($servername, $username, $password, $database);
 
-if ($conn->connect_error)
-{
-    die("Connection Error".$conn->connect_error);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-
-
-// Creating database "Assessment 2"
-/*
-$sql = "CREATE DATABASE assessment2";
-if($conn->query($sql) == TRUE)
-{
-    echo "Database created successfully <br>";
-}
-else
-{
-    echo "Error occured" .$conn->error;
-}
-*/
-
-
-// Creating table "Information"
-/*
-$sql = "CREATE TABLE information(
-    id INT(6) PRIMARY KEY AUTO_INCREMENT,
-    first_name VARCHAR(20) NOT NULL,
-    last_name VARCHAR(20) NOT NULL,
-    dob DATE NOT NULL,
-    email VARCHAR(40)
-    )";
-
-if($conn->query($sql) === TRUE){
-    echo "Table created successfully <br>";
-}
-else
-{
-    echo "Error occured " .$conn->error;
-}
-*/
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -64,8 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $stmt->close();
 }
 
-
 ?>
+
 
 
 <!DOCTYPE html>
@@ -165,8 +170,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 $conn->close();
 
 ?>
-
-
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>

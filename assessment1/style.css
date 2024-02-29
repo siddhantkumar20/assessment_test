@@ -24,13 +24,25 @@ body{
     background-color: rgb(255, 255, 255);
 }
 
-.option{
-    border: 2px solid rgb(126, 126, 126);
+.labl {
+    display : block;
     text-align: center;
-    border-radius: 10px;
-    background-color: rgb(147, 255, 255);
 }
 
-.option:hover{
-    background-color: rgb(0, 204, 255);
+.labl > input{ /* HIDE RADIO */
+    visibility: hidden; /* Makes input not-clickable */
+    position: absolute; /* Remove input from document flow */
+    
+}
+
+.labl > input + div{ /* DIV STYLES */
+    cursor:pointer;
+    border: 2px solid black;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.labl > input:checked + div{ /* (RADIO CHECKED) DIV STYLES */
+    background-color: #ffd6bb;
+    border: 1px solid #ff6600;
 }
