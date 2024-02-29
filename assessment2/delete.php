@@ -51,8 +51,6 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-
-
 if(isset($_GET['id'])){
     $id = $_GET['id'];
 
@@ -60,6 +58,5 @@ if(isset($_GET['id'])){
     $result = $conn->query($sql);
     header("location:assessment2.php");
 }
-
 
 ?>
